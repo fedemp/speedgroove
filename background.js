@@ -27,8 +27,8 @@
 			listen: function(message) {
 
 				var topic = message.data.topic;
-				if ( typeof SpeedGroove[topic] == 'function' ) {
-					SpeedGroove[topic](message);
+				if ( typeof SpeedGroove.bgApp[topic] == 'function' ) {
+					SpeedGroove.bgApp[topic](message);
 				}
 			},
 
@@ -59,5 +59,5 @@
 			} 
 		}
 	}; 
-	SpeedGroove.init();
+	SpeedGroove.bgApp.init();
 })(opera, window, window.document);
