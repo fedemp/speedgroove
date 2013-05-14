@@ -13,7 +13,7 @@
 	 */
 	var SpeedGroove = {
 
-		var fgApp = {
+		fgApp: {
 			/**
 			 * Cache current song id
 			 *
@@ -28,8 +28,10 @@
 			 * @param {Object} songEvent Original event object fired by Grooveshark.
 			 */
 			listenStatus: function(songEvent){
+				var fgApp = SpeedGroove.fgApp;
 				// Check before sending a message to background script if it's actually a new song
-				if (songEvent.song && songEvent.song.songID != SpeedGroove.songID) {
+				if (songEvent.song && songEvent.song.songID != fgApp.songID) {
+					fgApp.songID = songEvent.song.songID;
 					opera.extension.postMessage({topic: 'handlePlayStatus', body: songEvent});
 				}
 			},
@@ -41,7 +43,7 @@
 			 */
 			init: function(){
 				window.addEventListener('load', function(){
-					window.Grooveshark.setSongStatusCallback(SpeedGroove.listenStatus);
+					window.Grooveshark.setSongStatusCallback(SpeedGroove.fgApp.listenStatus);
 				});
 			}
 		}
