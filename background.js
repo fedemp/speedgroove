@@ -10,7 +10,7 @@
 	 * @module SpeedGroove
 	 */
 	var SpeedGroove = {};
-	var content = document.getElementById('inner-container');
+	var content = document.getElementById('container');
 
 	SpeedGroove.bgApp = {
 		/**
@@ -26,7 +26,7 @@
 		 * @property template
 		 */
 		template: (function(){
-			var rawTemplate = '<div><img src="{{artURL}}" alt="{{albumName}}"><br><b class="songName">{{songName}}</b><br><span class="artistName">{{artistName}}</span></div>';
+			var rawTemplate = '<div class="u-1-2"><img class="albumArt" src="{{artURL}}" alt="{{albumName}}"></div><div class="u-1-2"><b class="songName">{{songName}}</b><br><span class="artistName">{{artistName}}</span></div>';
 			return Hogan.compile(rawTemplate);
 		})(),
 
