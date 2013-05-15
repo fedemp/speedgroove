@@ -1,0 +1,31 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	background: #333;
+	color: #fff;
+	font: 12px/16px "Liberation Sans", "Arial", sans-serif; 
+	height: 100%;
+	width: 100%;
+}
+
+#container {
+	background: #f89100 linear-gradient(to bottom, #f89100, #f66d00);
+	color: #fff;
+	height: 93%;
+	width: 95%;
+	margin: 2.5%;
+	display: table;
+	text-align: center;
+}
+
+#inner-container {
+	vertical-align: middle;
+	display: table-cell;
+}
