@@ -5,6 +5,7 @@
   <description xml:lang="en">Check what is currently playing in Grooveshark from Speed Dial</description>
   <description xml:lang="es">Mirá lo que está reproduciendo en Grooveshark desde el Acceso Rápido</description>
   <icon src="icon.png"/>
+  <access origin="http://images.gs-cdn.net/"></access>
   <feature name="opera:speeddial" required="true">
 	  <param name="url" value="http://example.com" />
   </feature>
