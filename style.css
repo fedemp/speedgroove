@@ -1,6 +1,7 @@
 * {
 	padding: 0;
 	margin: 0;
+	box-sizing: border-box;
 }
 
 html {
@@ -21,11 +22,18 @@ body {
 	height: 93%;
 	width: 95%;
 	margin: 2.5%;
+	overflow: hidden;
 	display: table;
-	text-align: center;
+	padding: 0 5%;
 }
 
-#inner-container {
-	vertical-align: middle;
+.u-1-2 {
 	display: table-cell;
+	vertical-align: middle;
+	width: 48%;
+	margin-left: 2%;
+}
+
+.u-1-2 {
+	margin-left: 0;
 }
