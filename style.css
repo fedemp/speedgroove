@@ -37,3 +37,8 @@ body {
 .u-1-2 {
 	margin-left: 0;
 }
+
+.albumArt {
+	border: 3px solid #fff; 
+}
+
