@@ -21,6 +21,27 @@
 		song: undefined,
 
 		/**
+		 * Save a reference to the tab that is running Grooveshark.
+		 *
+		 * @property tab
+		 */
+		tab: undefined,
+
+		/**
+		 * Cache the ID of the tab that is running Grooveshark.
+		 *
+		 * @property tabID
+		 */
+		tabID: undefined,
+
+		/**
+		 * Save a reference to the interval of the pingTab method.
+		 *
+		 * @property intervalID
+		 */
+		intervalID: undefined,
+
+		/**
 		 * Precompiled template for showing currently playing song.
 		 *
 		 * @property template
@@ -34,7 +55,8 @@
 		 * Listen to messages from injected script.
 		 *
 		 * @method listen
-		 * @param {Object} message An object that represents the message. It must contain a `topic` and a `body`.
+		 * @param {Object} message An object that represents the message. It
+		 * must contain a body and a topic.
 		 */
 
 		listen: function(message) {
@@ -43,6 +65,60 @@
 				SpeedGroove.bgApp[topic](message);
 			}
 		},
+
+		/**
+		 * This method is runned when we receive the first message. It saves
+		 * the referece to the tab that runs Grooveshark and also its id.
+		 *
+		 * @method handleInject
+		 */
+		handleInject: function(message){
+			// Get the tab that is running GS.
+			var allTabs = opera.extension.tabs.getAll();
+			var tabsLength = allTabs.length;
+			while (tabsLength) {
+				tabsLength -= 1;
+				if (allTabs[length].port === message.source) {
+					this.tab = allTabs[length];
+					this.tabId = allTabs[length].id;
+				}
+				break; // break the while as soon as we find the needed tab.
+			}
+
+			// Start listening for tab closing.
+			opera.extension.tabs.onclose = this.handleTabClose.bind(this);
+
+			// Call the pingTab method.
+			this.pingTab();
+		},
+
+		/**
+		 * Ping the tab that is running GS to detect when we abandon the site.
+		 *
+		 * @method pingTab
+		 */
+		pingTab: function(){
+			var urlRegEx = /^http[s]?:\/\/grooveshark\.com.*/; 
+			this.intervalID = window.setInterval( (function(){
+				if (this.tab && !urlRegEx.test(tab.url)) {
+					this.destroy();
+					window.clearInterval(this.intervalID);
+				}
+			}).bind(this), 5000)
+		}
+
+		/**
+		 * React when a tab close to check if it was the one that was running
+		 * Grooveshark.
+		 *
+		 * @method handleTabClose
+		 * @param {Object} e Original tab close event.
+		 */
+		handleTabClose: function(e){
+			if (e.tab.id === this.tabID){
+				this.destroy();
+			}
+		}
 
 		/**
 		 * Handle changes in play status.
@@ -62,6 +138,16 @@
 			}
 
 		},
+
+		/**
+		 * Remove all references so we can start fresh.
+		 *
+		 * @method destroy
+		 */
+		destroy: function(){
+			this.song = null;
+			window.clearInterval(this.intervalID);
+		}
 
 		/**
 		 * Init the app.
