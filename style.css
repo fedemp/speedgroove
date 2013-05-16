@@ -25,6 +25,13 @@ body {
 	overflow: hidden;
 	display: table;
 	padding: 0 5%;
+	text-align: center;
+}
+
+.u-1-1 {
+	display: table-cell;
+	vertical-align: middle;
+	width: 100%;
 }
 
 .u-1-2 {
@@ -40,5 +47,10 @@ body {
 
 .albumArt {
 	border: 3px solid #fff; 
+}
+
+.playing .not-playing-message {
+.not-playing .playing-message {
+	display: none;
 }
 
