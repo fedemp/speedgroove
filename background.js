@@ -61,8 +61,8 @@
 
 		listen: function(message) {
 			var topic = message.data.topic;
-			if ( typeof SpeedGroove.bgApp[topic] == 'function' ) {
-				SpeedGroove.bgApp[topic](message);
+			if ( typeof this[topic] == 'function' ) {
+				this[topic](message);
 			}
 		},
 
@@ -104,8 +104,8 @@
 					this.destroy();
 					window.clearInterval(this.intervalID);
 				}
-			}).bind(this), 5000)
-		}
+			}).bind(this), 5000);
+		},
 
 		/**
 		 * React when a tab close to check if it was the one that was running
@@ -118,7 +118,7 @@
 			if (e.tab.id === this.tabID){
 				this.destroy();
 			}
-		}
+		},
 
 		/**
 		 * Handle changes in play status.
@@ -147,7 +147,7 @@
 		destroy: function(){
 			this.song = null;
 			window.clearInterval(this.intervalID);
-		}
+		},
 
 		/**
 		 * Init the app.
@@ -155,7 +155,7 @@
 		 * @method init
 		 */
 		init: function(){
-			opera.extension.addEventListener('message', this.listen, false);
+			opera.extension.addEventListener('message', this.listen.bind(this), false);
 		}
 	};
 
