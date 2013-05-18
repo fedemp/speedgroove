@@ -57,12 +57,9 @@
 			 */
 			init: function(){
 				this.message({topic: 'handleInject'});
-				window.addEventListener(
-					'load',
-					(function(){
-						window.Grooveshark.setSongStatusCallback(this.listenStatus);
-					}).bind(this)
-				);
+				window.addEventListener('load', function(){
+					window.Grooveshark.setSongStatusCallback(SpeedGroove.fgApp.listenStatus.bind(SpeedGroove.fgApp));
+				});
 			}
 		}
 	};
