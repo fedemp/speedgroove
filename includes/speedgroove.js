@@ -3,7 +3,6 @@
 // ==/UserScript==
 
 (function(opera, window, undefined){
-
 	"use strict";
 
 	/*
@@ -15,7 +14,7 @@
 
 		fgApp: {
 			/**
-			 * Cache current song id
+			 * Cache current song id.
 			 *
 			 * @property songID
 			 */
@@ -28,23 +27,42 @@
 			 * @param {Object} songEvent Original event object fired by Grooveshark.
 			 */
 			listenStatus: function(songEvent){
-				var fgApp = SpeedGroove.fgApp;
-				// Check before sending a message to background script if it's actually a new song
-				if (songEvent.song && songEvent.song.songID != fgApp.songID) {
-					fgApp.songID = songEvent.song.songID;
+				// Check before sending a message to background script if it's
+				// actually a new song.
+				if (songEvent.song && songEvent.song.songID != this.songID) {
+					this.songID = songEvent.song.songID;
 					opera.extension.postMessage({topic: 'handlePlayStatus', body: songEvent});
 				}
 			},
 
 			/**
+			 * Send messages to background scripts.
+			 *
+			 * @method message
+			 * @param {Object} message Message to send.
+			 * 	@param {String} message.topic The name of the function that will be called.
+			 * 	@param {any} [message.body] Any content that the function may
+			 * 	find relevant.
+			 */
+			message: function(message){
+				opera.extension.postMessage(message);
+			}
+
+			/**
 			 * Init the app.
+			 * Send the background script a signal that the script has been
+			 * injected and set the callback for song status changes.
 			 *
 			 * @method init
 			 */
 			init: function(){
-				window.addEventListener('load', function(){
-					window.Grooveshark.setSongStatusCallback(SpeedGroove.fgApp.listenStatus);
-				});
+				this.message({topic: 'handleInject'});
+				window.addEventListener(
+					'load',
+					(function(){
+						window.Grooveshark.setSongStatusCallback(this.listenStatus);
+					}).bind(this)
+				);
 			}
 		}
 	};
