@@ -46,7 +46,7 @@
 			 */
 			message: function(message){
 				opera.extension.postMessage(message);
-			}
+			},
 
 			/**
 			 * Init the app.
