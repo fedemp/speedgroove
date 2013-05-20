@@ -10,7 +10,6 @@
 	 * @module SpeedGroove
 	 */
 	var SpeedGroove = {};
-	var content = document.getElementById('container');
 
 	SpeedGroove.bgApp = {
 		/**
@@ -40,6 +39,13 @@
 		 * @property intervalID
 		 */
 		intervalID: undefined,
+
+		/**
+		 * Cache the DIV that holds what's playing content.
+		 *
+		 * @property contentPlayingDiv
+		 */
+		contentPlayingDiv: (document.getElementById('container-playing')),
 
 		/**
 		 * Precompiled template for showing currently playing song.
@@ -134,7 +140,7 @@
 			// Got a new song!
 			if (!this.song || currentSong.songID !== this.song.songID) {
 				this.song = currentSong;
-				content.innerHTML = this.template.render(currentSong);
+				this.contentPlayingDiv.innerHTML = this.template.render(currentSong);
 			}
 
 		},
@@ -150,12 +156,25 @@
 		},
 
 		/**
+		 * Render the welcome screen in the Speed Dial tile.
+		 *
+		 * @method renderWelcome
+		 */
+		renderWelcome: function(){
+			var messages = {nothingPlaying: 'Nothing is currently playing', gotoGrooveshark: 'Go to Grooveshark'}; // TODO: Use i18n.
+			return Hogan.compile("<div class='not-playing-message'>{{nothingPlaying}}<br><b>{{gotoGrooveshark}}</b></div>").render(messages); // TODO: Move to external file.  
+		},
+
+		/**
 		 * Init the app.
 		 *
 		 * @method init
 		 */
 		init: function(){
 			opera.extension.addEventListener('message', this.listen.bind(this), false);
+			// Note that we assume that scripts are loaded at the bottom of the
+			// page.
+			document.getElementById('container-not-playing').innerHTML = this.renderWelcome(); 
 		}
 	};
 
