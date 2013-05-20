@@ -135,13 +135,9 @@
 
 		handlePlayStatus: function(message) {
 			var currentSong = message.data.body.song;
-			var status = message.data.body.status;
 
-			// Got a new song!
-			if (!this.song || currentSong.songID !== this.song.songID) {
-				this.song = currentSong;
-				this.contentPlayingDiv.innerHTML = this.template.render(currentSong);
-			}
+			// Injected script takes care of filtering new songs.
+			this.contentPlayingDiv.innerHTML = this.template.render(currentSong);
 
 		},
 
