@@ -134,11 +134,10 @@
 		 */
 
 		handlePlayStatus: function(message) {
-			var currentSong = message.data.body.song;
-
 			// Injected script takes care of filtering new songs.
-			this.contentPlayingDiv.innerHTML = this.template.render(currentSong);
-
+			this.contentPlayingDiv.innerHTML = this.template.render(message.data.body.song);
+			document.body.classList.remove('not-playing');	
+			document.body.classList.add('playing');	
 		},
 
 		/**
