@@ -49,8 +49,8 @@ body {
 	border: 3px solid #fff; 
 }
 
-.playing .not-playing-message {
-.not-playing .playing-message {
+.playing #container-not-playing,
+.not-playing #container-playing {
 	display: none;
 }
 
