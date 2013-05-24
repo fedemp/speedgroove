@@ -76,7 +76,7 @@
             currentSong: {
               songName: song.songName,
               albumName: song.albumName,
-              artURL: song.artURL,
+              albumID: song.albumID,
               artistName: song.artistName
             }
           });
