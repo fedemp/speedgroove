@@ -7,7 +7,7 @@
   <icon src="icon.png"/>
   <access origin="http://images.gs-cdn.net/"></access>
   <feature name="opera:speeddial" required="true">
-	  <param name="url" value="http://example.com" />
+	  <param name="url" value="http://grooveshark.com" />
   </feature>
   <license href="http://opensource.org/licenses/MIT">
 Copyright 2013 Federico Panico
