@@ -21,7 +21,7 @@
 
 	var SpeedGrooveView = Stapes.subclass({
 		constructor: function(model){
-			this.model = model; 
+			this.model = model;
 
 			this.el = document.getElementById('container-playing');
 
@@ -29,9 +29,24 @@
 		},
 
 		render: function() {
+      document.body.classList.add('playing');
 			var song = this.model.get('currentSong');
 			this.el.innerHTML = this.template.render(song);
+      return this;
 		}
+
+    init: function(){
+      document.body.classList.remove('playing');
+      this.setSpeedDialUrl('http://grooveshark.com');
+      return this;
+    },
+
+    setSpeedDialUrl: function(url){
+      this.__speedDial.url = url;
+      return this;
+    },
+
+    __speedDial: opera.contexts.speeddial,
 	});
 
 	var SpeedGrooveController = Stapes.subclass({
@@ -46,7 +61,7 @@
 
       this.on('tabClosed', function(tabEvent){
         if (tabEvent.tab.id === this.__tabID) {
-          this.reinit();
+          this.view.init();
         }
       });
 
@@ -62,15 +77,16 @@
               artistName: song.artistName
 						}
 					});
-          return this;
 				}
 
         if (topic === 'INJECTED') {
-          this.reinit();
-          this.setSpeedDialUrl('focuser.html');
-          return this;
+          opera.extension.tabs.getAll().forEach(function(tab){
+            if (tab.port === message.source) {
+              this.__tab = tab;
+            }
+          },this)
+          this.view.init();
         }
-
 			});
 
 			opera.extension.addEventListener('message', function(message){
@@ -81,25 +97,13 @@
       });
 		}, // end of constructor
 
-    reinit: function(){
-      document.body.classList.remove('playing');
-      this.setSpeedDialUrl('http://grooveshark.com');
-      return this;
-    },
-
-    setSpeedDialUrl: function(url){
-      debugger;
-      this.__speedDial.url = url;
-      return this;
-    },
-
-    __speedDial: opera.contexts.speeddial,
-    __tabID: undefined
+    __tabID: undefined,
+    __tab: undefined
 
 	});
 
   SpeedGroove.bgApp.SpeedGrooveController = SpeedGrooveController;
   window.SpeedGroove = SpeedGroove;
   var a = new SpeedGroove.bgApp.SpeedGrooveController();
-  
+
 })(opera, window, window.document, Hogan, Stapes);
