@@ -50,19 +50,24 @@
 					song = message.data.body.song;
 					this.model.set({
 						currentSong: {
-							songTitle: song.songTitle,
-							albumName: song.album,
-							albumArt: song.albumArt
+							songName: song.songName,
+							albumName: song.albumName,
+							artURL: song.artURL,
+              artistName: song.artistName
 						}
 					});
+          return;
 				}
 			});
-
 
 			opera.extension.addEventListener('message', function(message){
 				self.emit('message', message);
 			})
 		},
 	});
+
+  SpeedGroove.bgApp.SpeedGrooveController = SpeedGrooveController;
+  window.SpeedGroove = SpeedGroove;
+  
 
 })(opera, window, window.document, Hogan, Stapes);
