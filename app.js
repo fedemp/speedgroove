@@ -33,7 +33,7 @@
 			var song = this.model.get('currentSong');
 			this.el.innerHTML = this.template.render(song);
       return this;
-		}
+		},
 
     init: function(){
       document.body.classList.remove('playing');
@@ -83,6 +83,7 @@
           opera.extension.tabs.getAll().forEach(function(tab){
             if (tab.port === message.source) {
               this.__tab = tab;
+              this.__tabID = tab.id;
             }
           },this)
           this.view.init();

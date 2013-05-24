@@ -50,7 +50,11 @@ body {
 }
 
 .playing #container-not-playing,
-.not-playing #container-playing {
+#container-playing {
 	display: none;
+}
+
+.playing #container-playing {
+  display: block;
 }
 
