@@ -38,10 +38,10 @@
 		constructor: function(){
 			var self = this;
 			this.model = new SpeedGrooveModel();
-			this.view = new SpeedGrooveView();
+			this.view = new SpeedGrooveView(this.model);
 
 			this.model.on('change', function(songId){
-				this.view.render();
+				self.view.render();
 			});
 
 			this.on('message', function(message){
