@@ -4,11 +4,16 @@
 		<title>SpeedGroove</title>
 		<link rel="stylesheet" href="style.css">
 	</head>
-	<body class="not-playing">
+	<body class="playing">
 		<div id="container-not-playing"></div>
 		<div id="container-playing"></div>
+    <script id="template-playing" type="text/html">
+      <img src="{{albumArt}}" alt="{{albumName}}"><br>
+      <h1>{{songName}}</h1>
+      <p>{{artistName}}</p>
+    </script>
+    <script src="vendor/hogan.js"></script>
+    <script src="vendor/stapes.js"></script>
+    <script src="background.js"></script>
 	</body>
-	<script src="vendor/hogan.js"></script>
-	<script src="vendor/stapes.js"></script>
-	<script src="background.js"></script>
 </html>
