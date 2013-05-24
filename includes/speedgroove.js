@@ -31,7 +31,7 @@
 				// actually a new song.
 				if (songEvent.song && songEvent.song.songID != this.songID) {
 					this.songID = songEvent.song.songID;
-					opera.extension.postMessage({topic: 'handlePlayStatus', body: songEvent});
+					opera.extension.postMessage({topic: 'NEWSONG', body: songEvent});
 				}
 			},
 
@@ -56,7 +56,7 @@
 			 * @method init
 			 */
 			init: function(){
-				this.message({topic: 'handleInject'});
+				this.message({topic: 'INJECTED'});
 				window.addEventListener('load', function(){
 					window.Grooveshark.setSongStatusCallback(SpeedGroove.fgApp.listenStatus.bind(SpeedGroove.fgApp));
 				});
