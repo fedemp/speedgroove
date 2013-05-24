@@ -40,13 +40,19 @@
 			this.model = new SpeedGrooveModel();
 			this.view = new SpeedGrooveView(this.model);
 
-			this.model.on('change', function(songId){
+			this.model.on('change', function(){
 				self.view.render();
 			});
 
+      this.on('tabClosed', function(tabEvent){
+        if (tabEvent.tab.id === this.__tabID) {
+          this.reinit();
+        }
+      });
+
 			this.on('message', function(message){
-				var song;
-				if (message.data.topic === 'NEWSONG') {
+				var song, topic = message.data.topic;
+				if (topic === 'NEWSONG') {
 					song = message.data.body.song;
 					this.model.set({
 						currentSong: {
@@ -56,18 +62,44 @@
               artistName: song.artistName
 						}
 					});
-          return;
+          return this;
 				}
+
+        if (topic === 'INJECTED') {
+          this.reinit();
+          this.setSpeedDialUrl('focuser.html');
+          return this;
+        }
+
 			});
 
 			opera.extension.addEventListener('message', function(message){
 				self.emit('message', message);
-			})
-		},
+			});
+      opera.extension.tabs.addEventListener('close', function(tabEvent){
+        self.emit('tabClosed', tabEvent);
+      });
+		}, // end of constructor
+
+    reinit: function(){
+      document.body.classList.remove('playing');
+      this.setSpeedDialUrl('http://grooveshark.com');
+      return this;
+    },
+
+    setSpeedDialUrl: function(url){
+      debugger;
+      this.__speedDial.url = url;
+      return this;
+    },
+
+    __speedDial: opera.contexts.speeddial,
+    __tabID: undefined
+
 	});
 
   SpeedGroove.bgApp.SpeedGrooveController = SpeedGrooveController;
   window.SpeedGroove = SpeedGroove;
+  var a = new SpeedGroove.bgApp.SpeedGrooveController();
   
-
 })(opera, window, window.document, Hogan, Stapes);
