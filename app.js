@@ -1,115 +1,141 @@
 (function(opera, window, document, Hogan, Stapes){
-  "use strict";
-  if (!Hogan || !Stapes) {
-    throw new Error('Missing dependencies');
-  }
+	"use strict";
+	if (!Hogan || !Stapes) {
+		throw new Error('Missing dependencies');
+	}
 
-  /**
-   * Check what is currently playing in Grooveshark from Opera Speed Dial.
-   * @module SpeedGroove
-   */
-  var SpeedGroove = {};
+	/**
+	* Check what is currently playing in Grooveshark from Opera Speed Dial.
+	* @module SpeedGroove
+	*/
+	var SpeedGroove = {};
 
-  /**
-   * Hold the background script.
-   * @namespace SpeedGroove
-   * @class bgApp
-   */
-  SpeedGroove.bgApp = {};
+	/**
+	* Hold the background script.
+	* @namespace SpeedGroove
+	* @class bgApp
+	*/
+	SpeedGroove.bgApp = {};
 
-  var SpeedGrooveModel = Stapes.subclass();
+	var SpeedGrooveModel = Stapes.subclass();
 
-  var SpeedGrooveView = Stapes.subclass({
-    constructor: function(model){
-      this.model = model;
+	var SpeedGrooveView = Stapes.subclass({
+		constructor: function(model){
+			var foo;
+			this.model = model;
+			this.el = document.getElementById('container-playing');
+			this.template = Hogan.compile( document.getElementById('template-playing').innerHTML );
+		},
+		render: function() {
+			document.body.classList.add('playing');
+			var song = this.model.get('currentSong');
+			this.el.innerHTML = this.template.render(song);
+			return this;
+		},
 
-      this.el = document.getElementById('container-playing');
+		init: function(){
+			document.body.classList.remove('playing');
+			this.setSpeedDialUrl('http://grooveshark.com');
+			return this;
+		},
 
-      this.template = Hogan.compile( document.getElementById('template-playing').innerHTML );
-    },
+		setSpeedDialUrl: function(url){
+			this.__speedDial.url = url;
+			return this;
+		},
 
-    render: function() {
-      document.body.classList.add('playing');
-      var song = this.model.get('currentSong');
-      this.el.innerHTML = this.template.render(song);
-      return this;
-    },
+		__speedDial: opera.contexts.speeddial,
+	});
 
-    init: function(){
-      document.body.classList.remove('playing');
-      this.setSpeedDialUrl('http://grooveshark.com');
-      return this;
-    },
+	var SpeedGrooveController = Stapes.subclass({
+		constructor: function(){
+			var self = this;
 
-    setSpeedDialUrl: function(url){
-      this.__speedDial.url = url;
-      return this;
-    },
+			this.model = new SpeedGrooveModel();
+			this.view = new SpeedGrooveView(this.model);
+			this.session = {};
 
-    __speedDial: opera.contexts.speeddial,
-  });
+			this.model.on('change', function(){
+				self.view.render();
+			});
 
-  var SpeedGrooveController = Stapes.subclass({
-    constructor: function(){
-      var self = this;
-      this.model = new SpeedGrooveModel();
-      this.view = new SpeedGrooveView(this.model);
+			this.on('tabClosed', function(e){
+				if (e.evt.tab.id === this.session.tabId) {
+					this.view.init();
+					opera.extension.tabs.removeEventListener('close', e.handler);
+				}
+			});
 
-      this.model.on('change', function(){
-        self.view.render();
-      });
+			this.on('message', function(message){
+				var method = 'handle' + message.data.topic;
+				if (typeof this[method] === "function") {
+					this[method](message);
+					return true;
+				}
+				return false;
+			});
 
-      this.on('tabClosed', function(tabEvent){
-        if (tabEvent.tab.id === this.__tabID) {
-          this.view.init();
-        }
-      });
+			opera.extension.addEventListener('message', function(message){
+				self.emit('message', message);
+			});
 
-      this.on('message', function(message){
-        var song, topic = message.data.topic;
-        if (topic === 'NEWSONG') {
-          // Let's assume that the latest injected script is
-          // the only one which we should listen to.
-          if (!this.__tab.port === message.source) { return; }
-          song = message.data.body.song;
-          this.model.set({
-            currentSong: {
-              songName: song.songName,
-              albumName: song.albumName,
-              albumID: song.albumID,
-              artistName: song.artistName
-            }
-          });
-          return;
-        }
+			return this;
+		},
 
-        if (topic === 'INJECTED') {
-          opera.extension.tabs.getAll().forEach(function(tab){
-            if (tab.port === message.source) {
-              this.__tab = tab;
-              this.__tabID = tab.id;
-            }
-          },this)
-          this.view.init();
-          return;
-        }
-      });
+		options: {
+			urlRegex: /^http[s]?:\/\/grooveshark\.com.*/,
+			intervalTime: 5000
+		},
 
-      opera.extension.addEventListener('message', function(message){
-        self.emit('message', message);
-      });
-      opera.extension.tabs.addEventListener('close', function(tabEvent){
-        self.emit('tabClosed', tabEvent);
-      });
-    },
+		handleINJECTED: function(message){
+			var self = this;
+			opera.extension.tabs.getAll().forEach(function(tab){
+				if (tab.port === message.source) {
+					this.session.tab = tab;
+					this.session.tabId = tab.id;
+				}
+			},this);
 
-    __tabID: undefined,
-    __tab: undefined
+			// Listen to closing tabs only if the injected script
+			// is active.
+			opera.extension.tabs.addEventListener('close', function handleTabClose(tabEvent){
+				self.emit('tabClosed', {evt: tabEvent, handler: handleTabClose});
+			});
 
-  });
+			// This is more like a re-init. If we get a new "Injected"
+			// message, then we set the view to its starting point again.
+			this.view.init();
+		},
 
-  SpeedGroove.bgApp.SpeedGrooveController = SpeedGrooveController;
-  window.SpeedGroove = SpeedGroove;
-  var a = new SpeedGroove.bgApp.SpeedGrooveController();
+		handleNEWSONG: function(message){
+			// Let's assume that the latest injected script is
+			// the only one which we should listen to.
+			if (!(this.session.tab.port === message.source)) { return; }
+			var song = message.data.body.song;
+			this.model.set({
+				currentSong: {
+					songName: song.songName,
+					albumName: song.albumName,
+					albumID: song.albumID,
+					artistName: song.artistName
+				}
+			});
+			return;
+		},
 
-})(opera, window, window.document, Hogan, Stapes);
+		pingTabs: function(){
+			var urlRegEx = this.options.urlRegEx;
+			var self = this;
+
+			var intervalID = window.setInterval( function(){
+				if (self.info.tab && !urlRegEx.test(self.info.tab.url)) {
+					self.view.init();
+					window.clearInterval(intervalID);
+				}
+			},this.options.intervalTime);
+		},
+	});
+
+	SpeedGroove.bgApp = new SpeedGrooveController();
+
+})(opera, window, window.document, window.Hogan, window.Stapes);
