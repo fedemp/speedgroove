@@ -1,12 +1,16 @@
-## SpeedGroove
+# SpeedGroove
 
 Check what is currently playing in Grooveshark from Opera Speed Dial.
 
 When you first install this extension, it will add a new shortcut to Grooveshark on Speed Dial.
 
+![Normal Speed Dial tile showing the Grooveshark Logo](https://raw.github.com/fedemp/speedgroove/gh-pages/screencapture.png)
+
 While your listening to music in Grooveshark, the shortcut will show the current song, plus the shortcut will focus your current Grooveshark sessión.
 
-### License
+![Speed Dial tile showing album art, song name and song artist](https://raw.github.com/fedemp/speedgroove/gh-pages/screencapture2.png)
+
+## License
 
 Copyright 2013 Federico Panico
 
@@ -16,10 +20,10 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  
 
-#### OTHER SCRIPTS INCLUDED:
+#### Other scripts included:
 
 * Stapes.js by Hay Kranen (Licensed under MIT License):
-
+````
 //
 //  ____  _                           _
 // / ___|| |_ __ _ _ __   ___  ___   (_)___  (*)
@@ -35,9 +39,10 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 // < http://en.wikipedia.org/wiki/MIT_License >
 //
 // Stapes.js : http://hay.github.com/stapes
+````
 
 * Hogan.js by Robert Sayre and Jacob Thornton for Twitter:
-
+````
 /*
 *  Copyright 2011 Twitter, Inc.
 *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -52,3 +57,4 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 *  See the License for the specific language governing permissions and
 *  limitations under the License.
 */
+````
