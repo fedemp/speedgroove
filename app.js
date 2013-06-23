@@ -1,5 +1,11 @@
 (function(opera, window, document, Hogan, Stapes){
 	"use strict";
+
+    // If this script is loaded in "focus GS" mode, do nothing.
+    if (window.location.search == "?focus=true"){
+      return;
+    }
+
 	if (!Hogan || !Stapes) {
 		throw new Error('Missing dependencies');
 	}
@@ -8,14 +14,14 @@
 	* Check what is currently playing in Grooveshark from Opera Speed Dial.
 	* @module SpeedGroove
 	*/
-	var SpeedGroove = {};
+	window.SpeedGroove = window.SpeedGroove || {};
 
 	/**
 	* Hold the background script.
 	* @namespace SpeedGroove
 	* @class bgApp
 	*/
-	SpeedGroove.bgApp = {};
+	SpeedGroove.bgApp = undefined;
 
 	var SpeedGrooveModel = Stapes.subclass();
 
@@ -30,21 +36,26 @@
 			document.body.classList.add('playing');
 			var song = this.model.get('currentSong');
 			this.el.innerHTML = this.template.render(song);
+			this.setSpeedDialUrl('index.html?focus=true');
 			return this;
 		},
 
 		init: function(){
 			document.body.classList.remove('playing');
-			this.setSpeedDialUrl('http://grooveshark.com');
+			this.setSpeedDialUrl(this.constants.gsURL);
 			return this;
 		},
 
 		setSpeedDialUrl: function(url){
-			this.__speedDial.url = url;
+			this.constants.speedDial.url = url;
 			return this;
 		},
 
-		__speedDial: opera.contexts.speeddial,
+		constants: {
+			gsURL: "http://grooveshark.com",
+			speedDial: opera.contexts.speeddial
+		}
+
 	});
 
 	var SpeedGrooveController = Stapes.subclass({

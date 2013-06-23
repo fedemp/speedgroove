@@ -12,6 +12,22 @@
       <h1>{{songName}}</h1>
       <p>{{artistName}}</p>
     </script>
+    <script>
+      !function(opera){
+        if (window.location.search != "?focus=true") {
+          return;
+        }
+
+        if (opera.extension.bgProcess.SpeedGroove &&
+        opera.extension.bgProcess.SpeedGroove.bgApp.session &&
+        opera.extension.bgProcess.SpeedGroove.bgApp.session.tab) {
+          // TODO: What if this page is opened in a background tab?
+          opera.extension.bgProcess.SpeedGroove.bgApp.session.tab.focus()
+          window.close();
+        }
+
+      }(opera);
+    </script>
     <script src="vendor/hogan.js"></script>
     <script src="vendor/stapes.js"></script>
     <script src="app.js"></script>
