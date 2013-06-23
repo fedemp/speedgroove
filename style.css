@@ -18,26 +18,41 @@ body {
 	display: table;
 }
 
+#container-not-playing img.smaller,
+#container-not-playing img.medium,
 .playing #container-not-playing,
 #container-playing {
 	display: none;
 }
 
 .playing #container-playing {
-  display: block;
+  display: table-cell;
 }
 
+.songName {
+	padding: 3% 0 1.5%;
+	font-size: 1.7em;
+	text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.251)
+}
+
+.artistName {
+	font-size: 1em;
+	text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.251)
+}
+
+#container-playing,
 #container-not-playing {
 	text-align: center;
 	display: table-cell;
 	vertical-align: middle;
 	background-image: -o-linear-gradient(top, #F77F00, #F45000);
 	background-image: linear-gradient(to bottom, #F77F00, #F45000)
+	color: #fff;
 }
 
-#container-not-playing img.smaller,
-#container-not-playing img.medium {
-	display: none;
+.albumArt img {
+	border: 3px solid #fff;
+	box-shadow: 0 0 3px rgba(0,0,0,0.5);
 }
 
 @media (max-height: 183px){
@@ -48,14 +63,20 @@ body {
 	#container-not-playing img.medium {
 		display: inline-block;
 	}
+
+	.albumArt img {
+		height: 90px;
+	}
 }
 
 @media (max-height: 120px){
 
+	.albumArt img,
 	#container-not-playing img.medium {
 		display: none;
 	}
 	#container-not-playing img.smaller {
 		display: inline-block;
 	}
+
 }

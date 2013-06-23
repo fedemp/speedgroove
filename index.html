@@ -12,9 +12,11 @@
 		</div>
 		<div id="container-playing"></div>
     <script id="template-playing" type="text/html">
-      <img src="http://images.gs-cdn.net/static/albums/120_{{albumID}}.jpg" alt="{{albumName}}"><br>
-      <h1>{{songName}}</h1>
-      <p>{{artistName}}</p>
+      <p class="albumArt"><img src="http://images.gs-cdn.net/static/albums/120_{{albumID}}.jpg" alt="{{albumName}}"></p>
+	  <div class="data">
+		  <h1 class="songName">{{songName}}</h1>
+		  <p class="artistName">{{artistName}}</p>
+	  </div>
     </script>
     <script>
       !function(opera){
