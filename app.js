@@ -36,9 +36,13 @@
 			document.body.classList.add('playing');
 			var song = this.model.get('currentSong');
 			this.el.innerHTML = this.template.render(song);
-			this.setSpeedDialUrl('index.html?focus=true');
+			this.setFocusMode();
 			return this;
 		},
+
+		setFocusMode: function(){
+			this.setSpeedDialUrl('index.html?focus=true');
+        },
 
 		init: function(){
 			document.body.classList.remove('playing');
@@ -116,6 +120,7 @@
 			// This is more like a re-init. If we get a new "Injected"
 			// message, then we set the view to its starting point again.
 			this.view.init();
+			this.view.setFocusMode();
 		},
 
 		handleNEWSONG: function(message){
