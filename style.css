@@ -39,7 +39,7 @@ body {
 	display: table-cell;
 	vertical-align: middle;
 	background-image: -o-linear-gradient(top, #F77F00, #F45000);
-	background-image: linear-gradient(to bottom, #F77F00, #F45000)
+	background-image: linear-gradient(to bottom, #F77F00, #F45000);
 	color: #fff;
 }
 
