@@ -31,12 +31,14 @@
 			this.model = model;
 			this.el = document.getElementById('container-playing');
 			this.template = Hogan.compile( document.getElementById('template-playing').innerHTML );
+			this.setSpeedDialTitle('Grooveshark');
 		},
 		render: function() {
 			document.body.classList.add('playing');
 			var song = this.model.get('currentSong');
 			this.el.innerHTML = this.template.render(song);
 			this.setFocusMode();
+			this.setSpeedDialTitle('On Grooveshark now...');
 			return this;
 		},
 
@@ -47,11 +49,17 @@
 		init: function(){
 			document.body.classList.remove('playing');
 			this.setSpeedDialUrl(this.constants.gsURL);
+			this.setSpeedDialTitle('Grooveshark');
 			return this;
 		},
 
 		setSpeedDialUrl: function(url){
 			this.constants.speedDial.url = url;
+			return this;
+		},
+
+		setSpeedDialTitle: function(title){
+			this.constants.speedDial.title = title
 			return this;
 		},
 
