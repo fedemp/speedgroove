@@ -6,47 +6,16 @@
 
 html {
 	height: 100%;
+	width: 100%;
 }
 
 body {
 	background: #333;
 	color: #fff;
-	font: 12px/16px "Liberation Sans", "Arial", sans-serif; 
+	font: 12px/16px "Liberation Sans", "Arial", sans-serif;
 	height: 100%;
 	width: 100%;
-}
-
-#container {
-	background: #f89100 linear-gradient(to bottom, #f89100, #f66d00);
-	color: #fff;
-	height: 93%;
-	width: 95%;
-	margin: 2.5%;
-	overflow: hidden;
 	display: table;
-	padding: 0 5%;
-	text-align: center;
-}
-
-.u-1-1 {
-	display: table-cell;
-	vertical-align: middle;
-	width: 100%;
-}
-
-.u-1-2 {
-	display: table-cell;
-	vertical-align: middle;
-	width: 48%;
-	margin-left: 2%;
-}
-
-.u-1-2 {
-	margin-left: 0;
-}
-
-.albumArt {
-	border: 3px solid #fff; 
 }
 
 .playing #container-not-playing,
@@ -58,3 +27,35 @@ body {
   display: block;
 }
 
+#container-not-playing {
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+	background-image: -o-linear-gradient(top, #F77F00, #F45000);
+	background-image: linear-gradient(to bottom, #F77F00, #F45000)
+}
+
+#container-not-playing img.smaller,
+#container-not-playing img.medium {
+	display: none;
+}
+
+@media (max-height: 183px){
+
+	#container-not-playing img.bigger {
+		display: none;
+	}
+	#container-not-playing img.medium {
+		display: inline-block;
+	}
+}
+
+@media (max-height: 120px){
+
+	#container-not-playing img.medium {
+		display: none;
+	}
+	#container-not-playing img.smaller {
+		display: inline-block;
+	}
+}
