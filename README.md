@@ -10,6 +10,10 @@ While your listening to music in Grooveshark, the shortcut will show the current
 
 ![Speed Dial tile showing album art, song name and song artist](https://raw.github.com/fedemp/speedgroove/gh-pages/screencapture2.png)
 
+## Installation
+
+Simply [download from Opera add-ons site](https://addons.opera.com/extensions/details/speedgroove/).
+
 ## License
 
 Copyright 2013 Federico Panico
