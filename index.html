@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>SpeedGroove</title>
-		<link rel="stylesheet" href="style.css">
-	</head>
-	<body>
-		<div id="container-not-playing">
-			<img src="img/gstxt.png" class="bigger" alt="Grooveshark">
-			<img src="img/gstxt120.png" class="medium" alt="Grooveshark">
-			<img src="img/gstxt90.png" class="smaller" alt="Grooveshark">
-		</div>
-		<div id="container-playing"></div>
+  <head>
+    <title>SpeedGroove</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="container-not-playing">
+      <img src="img/gstxt.png" class="bigger" alt="Grooveshark">
+      <img src="img/gstxt120.png" class="medium" alt="Grooveshark">
+      <img src="img/gstxt90.png" class="smaller" alt="Grooveshark">
+    </div>
+    <div id="container-playing"></div>
     <script id="template-playing" type="text/html">
       <p class="albumArt"><img src="http://images.gs-cdn.net/static/albums/120_{{albumID}}.jpg" alt="{{albumName}}"></p>
-	  <div class="data">
-		  <h1 class="songName">{{songName}}</h1>
-		  <p class="artistName">{{artistName}}</p>
-	  </div>
+      <div class="data">
+        <h1 class="songName">{{songName}}</h1>
+        <p class="artistName">{{artistName}}</p>
+      </div>
     </script>
     <script>
       !function(opera){
@@ -37,5 +37,9 @@
     <script src="vendor/hogan.js"></script>
     <script src="vendor/stapes.js"></script>
     <script src="app.js"></script>
-	</body>
+    <script src="mvc.js"></script>
+    <script>
+      window.SpeedGroove.bgApp.init();
+    </script>
+  </body>
 </html>
