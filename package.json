@@ -6,7 +6,8 @@
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
-    "yuidocjs": "~0.3.45"
+    "yuidocjs": "~0.3.45",
+    "grunt-contrib-jshint": "~0.6.0"
   },
   "scripts": {
     "test": "jshint"
@@ -17,8 +18,7 @@
   },
   "keywords": [
     "grooveshark",
-    "\"speed",
-    "dial\""
+    "speeddial"
   ],
   "author": "fedemp",
   "license": "MIT",
