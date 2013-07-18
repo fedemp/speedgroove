@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "Check",
   "main": "app.js",
-  "dependencies": {
-    "jsdoc": "~3.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "grunt": "~0.4.1"
+    "grunt": "~0.4.1",
+    "yuidocjs": "~0.3.45"
   },
   "scripts": {
     "test": "jshint"
