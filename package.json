@@ -1,0 +1,26 @@
+{
+  "name": "SpeedGroove",
+  "version": "1.0.0",
+  "description": "Check what is currently playing in Grooveshark from Opera Speed Dial",
+  "main": "app.js",
+  "dependencies": {
+    "jsdoc": "~3.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jshint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fedemp/speedgroove"
+  },
+  "keywords": [
+    "grooveshark",
+    "speed dial"
+  ],
+  "author": "fedemp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fedemp/speedgroove/issues"
+  }
+}
