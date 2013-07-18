@@ -10,7 +10,7 @@
     "grunt-contrib-jshint": "~0.6.0"
   },
   "scripts": {
-    "test": "jshint"
+    "test": "grunt jshint"
   },
   "repository": {
     "type": "git",
