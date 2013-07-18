@@ -192,4 +192,4 @@
 
   });
 
-})(opera, window, window.document, Hogan, Stapes);
+})(opera, window, window.document, Hogan, Stapes, SpeedGroove);
