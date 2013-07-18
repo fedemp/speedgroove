@@ -1,11 +1,13 @@
+/* global opera, window, Hogan, Stapes */
 (function(opera, window, document, Hogan, Stapes){
-  "use strict";
+  'use strict';
   if (!Hogan || !Stapes) {
     throw new Error('Missing dependencies');
   }
 
   /**
-   * @description Check what is currently playing in Grooveshark from Opera Speed Dial.
+   * @description Check what is currently playing in Grooveshark from Opera
+   * Speed Dial.
    * @module SpeedGroove
    * @main
    */
@@ -18,7 +20,8 @@
    */
   SpeedGroove.bgApp = {
     /**
-     * @description Init the bgApp. Creates a new controller and binds Opera events to controller events.
+     * @description Init the bgApp. Creates a new controller and binds
+     * Opera events to controller events.
      * @method init
      * @return void
      */
